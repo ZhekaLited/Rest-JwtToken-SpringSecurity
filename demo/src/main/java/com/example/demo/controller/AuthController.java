@@ -45,6 +45,9 @@ public class AuthController {
         String test = jwtUtil.generateToken(authRequest);
         return test;
     }
+    
+    
+    //JSON EXAMPLE !!!!!!!!!
 
     @PostMapping("user")
     public String getUser(@RequestBody String login) throws Exception {
