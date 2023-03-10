@@ -4,6 +4,7 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Role> selectRolesByUserId(Integer id) {
+    public List<Role> selectRolesByUserId(Long id) {
         return userMapper.selectRolesByUserId(id);
     }
 

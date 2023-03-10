@@ -12,7 +12,7 @@ public interface UserDAO {
 
     List<Role> selectallRoles();
 
-    List<Role> selectRolesByUserId(Integer id);
+    List<Role> selectRolesByUserId(Long id);
 
     List<User> userById(Integer id);
 

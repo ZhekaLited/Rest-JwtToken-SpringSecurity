@@ -1,12 +1,17 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -18,12 +23,26 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = null;
+        String login = username;
+        User userDetails = null;
         try {
-            user = userService.findByUserAuth(username);
+            userDetails = userService.findByUserAuth(username);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), new ArrayList<>());
+        List<Role> role = null;
+        try {
+            role = userService.findByRolesAuth(login);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.get(0).getName());
+        authorities.add(authority);
+        org.springframework.security.core.userdetails.User.UserBuilder builder
+                = org.springframework.security.core.userdetails.User.withUsername(username)
+                .password(userDetails.getPassword());
+        return builder.authorities(authorities).build();
     }
 }

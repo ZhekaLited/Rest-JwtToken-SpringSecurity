@@ -5,6 +5,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.LoginDaoImpl;
 import com.example.demo.repository.UserDAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
     LoginDaoImpl loginDaoImpl;
 
     @Override
-    public List<Role> selectRolesByUserId(Integer id) {
+    public List<Role> selectRolesByUserId(Long id) {
         return userDAO.selectRolesByUserId(id);
     }
 
@@ -47,6 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean createUser(User user, List<Role> roles) throws SQLException {
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return (userDAO.createUser(user, roles));
     }
 
@@ -58,6 +60,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUser(String login) throws SQLException {
         return (userDAO.deleteUser(login));
+    }
+
+    @Override
+    public List<Role> findByRolesAuth(String login) throws SQLException {
+        return (loginDaoImpl.findByRolesAuth(login));
     }
 }
 

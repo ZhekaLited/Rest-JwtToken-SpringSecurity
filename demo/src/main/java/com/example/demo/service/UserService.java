@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface UserService {
 
-    List<Role> selectRolesByUserId(Integer id);
+    List<Role> selectRolesByUserId(Long id);
 
     List<Role> selectallRoles();
 
@@ -26,6 +26,7 @@ public interface UserService {
 
     boolean deleteUser(String login) throws SQLException;
 
+    List<Role> findByRolesAuth(String login) throws SQLException;
 }
 
 

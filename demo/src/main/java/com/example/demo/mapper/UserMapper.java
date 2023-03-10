@@ -4,7 +4,6 @@ import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +27,7 @@ public interface UserMapper {
 
     List<Role> selectAllRoles(@Param("login") String login);
 
-    List<Role> selectRolesByUserId(@Param("id") Integer id);
+    List<Role> selectRolesByUserId(@Param("id") Long id);
 
     boolean deleteUser(String login);
 

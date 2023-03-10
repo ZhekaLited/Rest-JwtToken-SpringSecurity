@@ -1,11 +1,6 @@
 package com.example.demo.jwt;
 
 import com.example.demo.dto.AuthenticationRequestDto;
-//import com.example.demo.model.User;
-//import io.jsonwebtoken.Claims;
-//import io.jsonwebtoken.Jwts;
-//import io.jsonwebtoken.SignatureAlgorithm;
-//import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -53,7 +48,6 @@ public class JwtUtil {
 
     public String generateToken(AuthenticationRequestDto u) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id", u.getId() + "");
         claims.put("login", u.getLogin());
         claims.put("password", u.getPassword());
 
