@@ -19,8 +19,9 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
-
-    private PasswordEncoder passwordEncoder;
+  
+    @Autowired
+    private PasswordEncoder passwordEncoder; //Нужно сделать Autowired иначе работать не будет
 
     @GetMapping("/users/list")
     public List<User> listUser() {
@@ -48,7 +49,7 @@ public class UserController {
     @PostMapping("/users/add")
     @ResponseStatus(HttpStatus.CREATED)
     public boolean postCreate(@RequestBody User user) throws SQLException {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));  //Хэширование пароля при добавлении!!!
         user.setAge(Period.between(user.getBirthday(), LocalDate.now()).getYears());
         return userService.createUser(user, user.roles);
     }
